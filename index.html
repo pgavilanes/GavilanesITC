@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hello! Welcome to my simple website</title>
+  <title>ITC basic website project</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -52,13 +52,13 @@
 
 <body>
 
-  <h1>Assignments</h1>
+  <h1>Hello! Welcome to my simple website</h1>
   <nav>
     <a href="#home">Home</a>
-    <a href="#a1">Assignment #1</a>
-    <a href="#a2">Assignment #2</a>
-    <a href="#a3">Assignment #3</a>
-    <a href="#a4">Assignment #4</a>
+    <a href="#a1">Conversion</a>
+    <a href="#a2">Income Tax Calculator</a>
+    <a href="#a3">Factorial, Sum, and Average</a>
+    <a href="#a4">Payroll</a>
   </nav>
   <hr>
 
@@ -66,11 +66,9 @@
   <div id="home" class="page">
     <h2>Main Page</h2>
     <ul>
-      <li><a href="#a1">Assignment #1 - Conversion (Celsius to Fahrenheit, Fahrenheit to Celsius, Meters to Feet, Feet
-          to Meters)</a></li>
+      <li><a href="#a1">Assignment #1 - Conversion</a></li>
       <li><a href="#a2">Assignment #2 - Income Tax Calculator</a></li>
-      <li><a href="#a3">Assignment #3 - Factorial (While Loop), Sum (Do While Loop) and Average (For Loop) of First N
-          Natural Numbers</a></li>
+      <li><a href="#a3">Assignment #3 - Factorial, Sum, and Average</a></li>
       <li><a href="#a4">Assignment #4 - Simple Payroll</a></li>
     </ul>
   </div>
@@ -175,7 +173,6 @@
   </div>
 
   <script>
-    /* ---------- Navigation ---------- */
     function showPage() {
       var id = location.hash.replace("#", "") || "home";
       var pages = document.querySelectorAll(".page");
@@ -194,7 +191,6 @@
       return n.toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    /* ---------- Assignment 1 ---------- */
     function convert() {
       var v = parseFloat(document.getElementById("convValue").value);
       var type = document.getElementById("convType").value;
@@ -209,7 +205,6 @@
       }
     }
 
-    /* ---------- Assignment 2 ---------- */
     function computeTax() {
       var income = parseFloat(document.getElementById("taxIncome").value);
       var out = document.getElementById("taxResult");
@@ -224,13 +219,11 @@
       out.textContent = "Income Tax: P" + fmt(tax);
     }
 
-    /* ---------- Assignment 3 ---------- */
     function computeN() {
       var n = parseInt(document.getElementById("nValue").value, 10);
       var out = document.getElementById("nResult");
       if (isNaN(n) || n < 1) { out.textContent = "Please enter a natural number (1 or greater)."; return; }
 
-      // Factorial - while loop (BigInt so large N stays exact)
       var fact = 1n;
       var i = 1;
       while (i <= n) {
@@ -238,7 +231,6 @@
         i++;
       }
 
-      // Sum - do while loop
       var sum = 0;
       var j = 1;
       do {
@@ -246,7 +238,6 @@
         j++;
       } while (j <= n);
 
-      // Average - for loop
       var total = 0;
       for (var k = 1; k <= n; k++) {
         total += k;
@@ -258,7 +249,6 @@
         "<br>Average of first " + n + " natural numbers = " + avg;
     }
 
-    /* ---------- Assignment 4 ---------- */
     var payroll = [];
 
     function renderPayroll() {
