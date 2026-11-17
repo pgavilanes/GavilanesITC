@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello! Welcome to my simple website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 12px;
+    }
+
+    nav a {
+      margin-right: 12px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    input,
+    select,
+    button {
+      margin: 4px 0;
+      padding: 4px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      border: 1px solid #333;
+      padding: 4px 8px;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Assignments</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#a1">Assignment #1</a>
+    <a href="#a2">Assignment #2</a>
+    <a href="#a3">Assignment #3</a>
+    <a href="#a4">Assignment #4</a>
+  </nav>
+  <hr>
+
+  <!-- HOME -->
+  <div id="home" class="page">
+    <h2>Main Page</h2>
+    <ul>
+      <li><a href="#a1">Assignment #1 - Conversion (Celsius to Fahrenheit, Fahrenheit to Celsius, Meters to Feet, Feet
+          to Meters)</a></li>
+      <li><a href="#a2">Assignment #2 - Income Tax Calculator</a></li>
+      <li><a href="#a3">Assignment #3 - Factorial (While Loop), Sum (Do While Loop) and Average (For Loop) of First N
+          Natural Numbers</a></li>
+      <li><a href="#a4">Assignment #4 - Simple Payroll</a></li>
+    </ul>
+  </div>
+
+  <!-- ASSIGNMENT 1 -->
+  <div id="a1" class="page">
+    <h2>Assignment #1 - Conversion</h2>
+    <label>Value: <input type="number" id="convValue" step="any"></label><br>
+    <label>Conversion:
+      <select id="convType">
+        <option value="c2f">Celsius to Fahrenheit</option>
+        <option value="f2c">Fahrenheit to Celsius</option>
+        <option value="m2ft">Meters to Feet</option>
+        <option value="ft2m">Feet to Meters</option>
+      </select>
+    </label><br>
+    <button onclick="convert()">Convert</button>
+    <div class="result" id="convResult"></div>
+  </div>
+
+  <!-- ASSIGNMENT 2 -->
+  <div id="a2" class="page">
+    <h2>Assignment #2 - Income Tax Calculator</h2>
+    <label>Taxable Income (P): <input type="number" id="taxIncome" min="0" step="any"></label><br>
+    <button onclick="computeTax()">Compute Income Tax</button>
+    <div class="result" id="taxResult"></div>
+    <table>
+      <tr>
+        <th>Over</th>
+        <th>But Not Over</th>
+        <th>Basic Tax + Rate</th>
+      </tr>
+      <tr>
+        <td>-</td>
+        <td>P250,000</td>
+        <td>0%</td>
+      </tr>
+      <tr>
+        <td>P250,000</td>
+        <td>P400,000</td>
+        <td>20% of the excess over P250,000</td>
+      </tr>
+      <tr>
+        <td>P400,000</td>
+        <td>P800,000</td>
+        <td>P30,000 + 25% of the excess over P400,000</td>
+      </tr>
+      <tr>
+        <td>P800,000</td>
+        <td>P2,000,000</td>
+        <td>P130,000 + 30% of the excess over P800,000</td>
+      </tr>
+      <tr>
+        <td>P2,000,000</td>
+        <td>P8,000,000</td>
+        <td>P490,000 + 32% of the excess over P2,000,000</td>
+      </tr>
+      <tr>
+        <td>P8,000,000</td>
+        <td></td>
+        <td>P2,410,000 + 35% of the excess over P8,000,000</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ASSIGNMENT 3 -->
+  <div id="a3" class="page">
+    <h2>Assignment #3 - Factorial, Sum and Average</h2>
+    <label>N: <input type="number" id="nValue" min="1" step="1"></label><br>
+    <button onclick="computeN()">Compute</button>
+    <div class="result" id="nResult"></div>
+  </div>
+
+  <!-- ASSIGNMENT 4 -->
+  <div id="a4" class="page">
+    <h2>Assignment #4 - Simple Payroll</h2>
+    <h3>Add Employee</h3>
+    <label>Employee Name: <input type="text" id="empName"></label><br>
+    <label>Days Worked: <input type="number" id="empDays" min="0" step="any"></label><br>
+    <label>Daily Rate: <input type="number" id="empRate" min="0" step="any"></label><br>
+    <label>Deduction Amount: <input type="number" id="empDeduct" min="0" step="any"></label><br>
+    <button onclick="addEmployee()">Add</button>
+
+    <h3>Delete Employee</h3>
+    <label>Line Number: <input type="number" id="delLine" min="1" step="1"></label>
+    <button onclick="deleteEmployee()">Delete</button>
+
+    <table id="payrollTable">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Employee Name</th>
+          <th>Days Worked</th>
+          <th>Daily Rate</th>
+          <th>Gross Pay</th>
+          <th>Deduction Amount</th>
+          <th>Net Pay</th>
+        </tr>
+      </thead>
+      <tbody id="payrollBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    /* ---------- Navigation ---------- */
+    function showPage() {
+      var id = location.hash.replace("#", "") || "home";
+      var pages = document.querySelectorAll(".page");
+      var found = false;
+      for (var i = 0; i < pages.length; i++) {
+        var match = pages[i].id === id;
+        pages[i].classList.toggle("active", match);
+        if (match) found = true;
+      }
+      if (!found) document.getElementById("home").classList.add("active");
+    }
+    window.addEventListener("hashchange", showPage);
+    showPage();
+
+    function fmt(n) {
+      return n.toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    /* ---------- Assignment 1 ---------- */
+    function convert() {
+      var v = parseFloat(document.getElementById("convValue").value);
+      var type = document.getElementById("convType").value;
+      var out = document.getElementById("convResult");
+      if (isNaN(v)) { out.textContent = "Please enter a valid number."; return; }
+      var r;
+      switch (type) {
+        case "c2f": r = v * 9 / 5 + 32; out.textContent = v + " °C = " + r.toFixed(2) + " °F"; break;
+        case "f2c": r = (v - 32) * 5 / 9; out.textContent = v + " °F = " + r.toFixed(2) + " °C"; break;
+        case "m2ft": r = v * 3.28084; out.textContent = v + " m = " + r.toFixed(2) + " ft"; break;
+        case "ft2m": r = v / 3.28084; out.textContent = v + " ft = " + r.toFixed(2) + " m"; break;
+      }
+    }
+
+    /* ---------- Assignment 2 ---------- */
+    function computeTax() {
+      var income = parseFloat(document.getElementById("taxIncome").value);
+      var out = document.getElementById("taxResult");
+      if (isNaN(income) || income < 0) { out.textContent = "Please enter a valid taxable income."; return; }
+      var tax;
+      if (income <= 250000) tax = 0;
+      else if (income <= 400000) tax = 0.20 * (income - 250000);
+      else if (income <= 800000) tax = 30000 + 0.25 * (income - 400000);
+      else if (income <= 2000000) tax = 130000 + 0.30 * (income - 800000);
+      else if (income <= 8000000) tax = 490000 + 0.32 * (income - 2000000);
+      else tax = 2410000 + 0.35 * (income - 8000000);
+      out.textContent = "Income Tax: P" + fmt(tax);
+    }
+
+    /* ---------- Assignment 3 ---------- */
+    function computeN() {
+      var n = parseInt(document.getElementById("nValue").value, 10);
+      var out = document.getElementById("nResult");
+      if (isNaN(n) || n < 1) { out.textContent = "Please enter a natural number (1 or greater)."; return; }
+
+      // Factorial - while loop (BigInt so large N stays exact)
+      var fact = 1n;
+      var i = 1;
+      while (i <= n) {
+        fact *= BigInt(i);
+        i++;
+      }
+
+      // Sum - do while loop
+      var sum = 0;
+      var j = 1;
+      do {
+        sum += j;
+        j++;
+      } while (j <= n);
+
+      // Average - for loop
+      var total = 0;
+      for (var k = 1; k <= n; k++) {
+        total += k;
+      }
+      var avg = total / n;
+
+      out.innerHTML = "Factorial of " + n + " = " + fact.toString() +
+        "<br>Sum of first " + n + " natural numbers = " + sum +
+        "<br>Average of first " + n + " natural numbers = " + avg;
+    }
+
+    /* ---------- Assignment 4 ---------- */
+    var payroll = [];
+
+    function renderPayroll() {
+      var body = document.getElementById("payrollBody");
+      body.innerHTML = "";
+      for (var i = 0; i < payroll.length; i++) {
+        var e = payroll[i];
+        var gross = e.days * e.rate;
+        var net = gross - e.deduct;
+        var row = body.insertRow();
+        var cells = [i + 1, e.name, e.days, fmt(e.rate), fmt(gross), fmt(e.deduct), fmt(net)];
+        for (var c = 0; c < cells.length; c++) {
+          row.insertCell().textContent = cells[c];
+        }
+      }
+    }
+
+    function addEmployee() {
+      var name = document.getElementById("empName").value.trim();
+      var days = parseFloat(document.getElementById("empDays").value);
+      var rate = parseFloat(document.getElementById("empRate").value);
+      var deduct = parseFloat(document.getElementById("empDeduct").value);
+      if (name === "" || isNaN(days) || isNaN(rate) || isNaN(deduct)) {
+        alert("Please fill in all fields with valid values.");
+        return;
+      }
+      payroll.push({ name: name, days: days, rate: rate, deduct: deduct });
+      renderPayroll();
+      document.getElementById("empName").value = "";
+      document.getElementById("empDays").value = "";
+      document.getElementById("empRate").value = "";
+      document.getElementById("empDeduct").value = "";
+    }
+
+    function deleteEmployee() {
+      var line = parseInt(document.getElementById("delLine").value, 10);
+      if (isNaN(line) || line < 1 || line > payroll.length) {
+        alert("Invalid line number.");
+        return;
+      }
+      payroll.splice(line - 1, 1);
+      renderPayroll();
+      document.getElementById("delLine").value = "";
+    }
+  </script>
+
+</body>
+
+</html>
